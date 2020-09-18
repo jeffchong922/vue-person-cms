@@ -97,7 +97,7 @@
     <!-- 遮罩 end -->
     
     <main class="auto-scroll-top ml-0 sm:ml-56 mt-8 sm:mt-0 pt-3 pb-12 sm:pb-4 h-full overflow-x-auto overflow-y-scroll px-4">
-      <router-view key="$route.path"></router-view>
+      <router-view :key="$route.path"></router-view>
     </main>
   </div>
 </template>
