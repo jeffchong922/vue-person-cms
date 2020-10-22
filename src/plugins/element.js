@@ -15,6 +15,8 @@ import {
   Tabs,
   TabPane,
 
+  Pagination,
+
   Menu,
   Submenu,
   MenuItem,
@@ -50,6 +52,7 @@ Vue.use(Submenu)
 Vue.use(MenuItem)
 Vue.use(MenuItemGroup)
 
+Vue.use(Pagination)
 
 Vue.prototype.$message = Message
 Vue.prototype.$msgBox = MessageBox

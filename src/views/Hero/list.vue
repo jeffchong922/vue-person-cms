@@ -4,7 +4,7 @@
     <div class="shadow-lg rounded max-w-3xl">
       <el-table
         style="width: 100%"
-        :data="heroList"
+        :data="filterList"
         :empty-text="fetchLoading ? '正在搜索中...' : '暂无数据'"
       >
         <el-table-column prop="id" label="ID"></el-table-column>
@@ -35,6 +35,18 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <div class="flex justify-end py-3">
+        <el-pagination
+          @size-change="handleSizeChage"
+          @current-change="handleCurrentChange"
+          :page-sizes="[10, 20, 30, 50]"
+          :current-page="pageNumber"
+          :page-size="10"
+          layout="total, prev, pager, next, sizes"
+          :total="heroList.length"
+        ></el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -50,13 +62,31 @@ export default {
     ...mapState({
       fetchLoading: state => state.heroes.loading,
       heroList: state => state.heroes.list
-    })
+    }),
+    filterList () {
+      if (this.heroList) {
+        return this.heroList.slice((this.pageNumber - 1) * this.pageSize, this.pageNumber * this.pageSize)
+      }
+      return []
+    }
   },
+  data: () => ({
+    pageNumber: 1,
+    pageSize: 10
+  }),
   methods: {
     ...mapActions({
       fetchHeroes: "heroes/load",
-      deleteHero: "heroes/delete"
+      deleteHero: "heroes/delete",
     }),
+
+    handleSizeChage (val) {
+      this.pageSize = val
+    },
+
+    handleCurrentChange (val) {
+      this.pageNumber = val
+    },
 
     handleDelete({ id, name }) {
       this.$msgBox
